@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tdma_scheduler"
+version = "0.0.1"
+dependencies = [
+    "networkx",
+    "numpy",
+    "ortools~=9.7",
+    "matplotlib",
+    "jsonschema",
+    "pydot",
+    "colorcet",
+    "plotly"
+]
+optional-dependencies.test = ["black", "pytest", "pytest-cov[all]", "pylint"]
+#optional-dependencies.dev = ["strictdoc"]
+requires-python = ">=3.8"
+authors = [{ name = "Janick Beck", email = "janick.beck@dlr.de" }]
+maintainers = [{ name = "Janick Beck", email = "janick.beck@dlr.de" }]
+description = "The right message, at the time."
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+keywords = ["tdma", "network", "hsdn"]
+
+
+[project.urls]
+Homepage = "https://dlr.de/ft/ssy"
+
+[project.scripts]
+tdma-scheduler = "tdma_scheduler:scheduler.main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tdma_scheduler"]
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src/tdma_scheduler"]
+
+[tool.pylint.main]
+recursive = true
+init-hook = 'import sys; sys.path.append("."); sys.path.append("./src/tdma_scheduler/*")'
+source-roots = "./src/tdma_scheduler/"
+max-module-lines=10_000
+
+[tool.pylint.basic]
+class-naming-style = "snake_case"
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.pylint.design]
+max-locals = 200
+max-branches = 100
+max-statements = 500
+max-args = 10
+max-positional-arguments = 10
+
+[tool.pylint."messages control"]
+disable = ["duplicate-code"]
+
+[tool.pylint.logging]
+disable = "logging-fstring-interpolation"
+enable = "logging-not-lazy"
+
+[tool.pylint.typecheck]
+generated-members = ["pyplot.cm.*"]
+ignored-classes = ["CpSolver", "CpModel", "LinearExpr"]

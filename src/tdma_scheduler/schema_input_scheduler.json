@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schema_input_scheduler",
+  "title": "Schema Input Scheduler",
+  "description": "Input file description for the TDMA scheduler",
+  "type": "object",
+  "properties": {
+    "max_transmission_size": {
+      "type": "integer",
+      "description": "Maximum size of the data within one slot in time units",
+      "minimum": 0
+    },
+    "min_gbt": {
+      "type": "integer",
+      "description": "Minimum guard bandwidth between slots within the schedule in time units",
+      "minimum": 0
+    },
+    "common_latency_value": {
+      "type": "integer",
+      "description": "Set common latency between nodes within the network in time units",
+      "minimum": 0
+    },
+    "inner_domain_links": {
+      "type": "array",
+      "description": "List of all inner domain link in the network",
+      "items": {
+        "$ref": "#/$defs/domain_link"
+      }
+    },
+    "outer_domain_interfaces": {
+      "type": "array",
+      "description": "List of all outer domain interfaces in the network",
+      "items": {
+        "$ref": "#/$defs/outer_domain_interface"
+      }
+    },
+    "virtual_links": {
+      "type": "array",
+      "description": "List of all virtual links within the network",
+      "items": {
+        "$ref": "#/$defs/virtual_link"
+      }
+    },
+    "time_sync_priority": {
+      "type": "array",
+      "description": "List of time synchronisation priorities associated with NAPs",
+      "items": {
+        "type": "object",
+        "description": "Time synchronisation priority of a NAP",
+        "properties": {
+          "nap_id": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "max_transmission_size",
+    "min_gbt",
+    "common_latency_value",
+    "inner_domain_links",
+    "outer_domain_interfaces",
+    "virtual_links"
+  ],
+  "$defs": {
+    "domain_link": {
+      "type": "object",
+      "description": "Object describing a complete link in the inner domain",
+      "properties": {
+        "latency": {
+          "type": "integer",
+          "description": "The latency of the link"
+        },
+        "interface_list": {
+          "type": "array",
+          "description": "List of NAP inner domain interfaces with exactly two interfaces creating a link",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/link_side"
+          }
+        }
+      },
+      "required": ["latency", "interface_list"]
+    },
+    "link_side": {
+      "type": "object",
+      "description": "Link object describing one side of a link",
+      "properties": {
+        "nap_id": {
+          "type": "string",
+          "description": "ID of the NAP the interface belongs to"
+        },
+        "interface_id": {
+          "type": "string",
+          "description": "ID of the interface"
+        }
+      },
+      "required": ["nap_id", "interface_id"]
+    },
+    "outer_domain_interface": {
+      "type": "object",
+      "description": "Object describing one outer domain interface",
+      "properties": {
+        "nap_id": {
+          "type": "string",
+          "description": "ID of the NAP the interface belongs to"
+        },
+        "interface_id": {
+          "type": "string",
+          "description": "ID of the interface"
+        },
+        "interface_type": {
+          "type": "string",
+          "description": "Type of the interface"
+        }
+      },
+      "required": ["nap_id", "interface_id", "interface_type"]
+    },
+    "nap_source_target": {
+      "type": "object",
+      "description": "Virtual link source or target, describing either a NAP or outer domain interface connected to a NAP",
+      "properties": {
+        "nap_id": {
+          "type": "string",
+          "description": "ID of the NAP"
+        },
+        "interface_id": {
+          "type": "string",
+          "description": "ID of the interface, missing if NAP is the source/target"
+        }
+      },
+      "required": ["nap_id"]
+    },
+    "virtual_link": {
+      "type": "object",
+      "description": "Virtual link (VL) within the network",
+      "properties": {
+        "id": {
+          "type": "array",
+          "description": "IDs of the redundant virtual links. Only one entry means no redundancy",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "source_nap": {
+          "$ref": "#/$defs/nap_source_target"
+        },
+        "target_naps": {
+          "type": "array",
+          "description": "List of target NAP ID(s) of the virtual link",
+          "items": {
+            "$ref": "#/$defs/nap_source_target"
+          },
+          "minItems": 1
+        },
+        "data_size": {
+          "type": "integer",
+          "description": "Data size the virtual link requires in time units"
+        },
+        "transmission_frequency": {
+          "type": "integer",
+          "description": "Frequency in which the data size is send in time units"
+        },
+        "allow_retransmissions": {
+          "type": "boolean",
+          "description": "Boolean flag if retransmissions are allowed for this virtual link"
+        },
+        "max_allowed_latency": {
+          "type": "integer",
+          "description": "Maximum allowed latency of the VL between source and all targets"
+        },
+        "is_deterministic": {
+          "type": "boolean",
+          "description": "True if VL is deterministic, best-effort else"
+        },
+        "local_destination": {
+          "type": "boolean",
+          "description": "True if VL is routed only locally, not in the inner domain"
+        },
+        "vl_active": {
+          "type": "boolean",
+          "description": "True if VL should be scheduled at all"
+        },
+        "interface_channel": {
+          "type": "integer",
+          "description": "Channel the outer domain interface should use"
+        },
+        "deduplication_method": {
+          "enum": ["no", "static", "timeout", "transparent"],
+          "description": "Type of deduplication used for redundant VLs"
+        },
+        "deduplication_source": {
+          "enum": ["p0", "p1"],
+          "description": "Source of the deduplication if VL is redundant"
+        }
+      },
+      "required": [
+        "id",
+        "source_nap",
+        "target_naps",
+        "data_size",
+        "transmission_frequency",
+        "allow_retransmissions",
+        "max_allowed_latency",
+        "is_deterministic",
+        "vl_active",
+        "local_destination"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "id": {
+                "minItems": 2
+              }
+            }
+          },
+          "then": {
+            "required": ["deduplication_method"]
+          },
+          "else": {
+            "properties": {
+              "id": {
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "deduplication_method": {
+                "const": "static"
+              }
+            },
+            "required": ["deduplication_method"]
+          },
+          "then": {
+            "required": ["deduplication_source"]
+          }
+        }
+      ]
+    }
+  }
+}

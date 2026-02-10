@@ -10,7 +10,6 @@ The program is split into two functions:
 
 The executable program parts can be found in the `src` folder.
 
-Test cases can be found in the `tests` folder.
 
 Dependencies and build options are found in the `pyproject.toml`.
 

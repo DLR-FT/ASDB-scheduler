@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schema_output_scheduler",
+  "title": "Schema Output Scheduler",
+  "description": "Output file description for the TDMA scheduler",
+  "type": "object",
+  "properties": {
+    "slots": {
+      "type": "array",
+      "description": "List of scheduled slots",
+      "items": {
+        "$ref": "#/$defs/slot"
+      }
+    },
+    "cycle_time": {
+      "type": "integer",
+      "description": "Cycle time of the complete schedule in time units"
+    }
+  },
+  "required": ["slots", "cycle_time"],
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "description": "A slot in the TDMA schedule",
+      "properties": {
+        "virtual_links": {
+          "type": "array",
+          "description": "List of virtual link ID(s) assigned to this slot",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "is_deterministic": {
+          "type": "boolean",
+          "description": "True if VL is deterministic, best-effort else"
+        },
+        "nap_interface": {
+          "type": "string",
+          "description": "Associated egress NAP interface on which this slot exists"
+        },
+        "start": {
+          "type": "integer",
+          "description": "Start time of the slot in time units",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "description": "End time of the slot in time units",
+          "minimum": 0
+        }
+      },
+      "if": {
+        "properties": {
+          "is_deterministic": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "virtual_links": {
+            "maxItems": 1
+          }
+        }
+      },
+      "required": [
+        "virtual_links",
+        "is_deterministic",
+        "nap_interface",
+        "start",
+        "end"
+      ]
+    }
+  }
+}

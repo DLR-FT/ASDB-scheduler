@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rcd_nap_config_schema_B",
+  "title": "Schema B for NAP configuration",
+  "description": "Input file description for the NAP configuration application. Setting the config: HSDN-Config, VL-Map, local VL-Mappinng, TDMA",
+  "type": "object",
+  "properties": {
+    "naps": {
+      "type": "array",
+      "description": "List of all NAPs within the network",
+      "items": {
+        "$ref": "#/$defs/nap"
+      }
+    },
+    "cycle_time": {
+      "type": "integer",
+      "description": "Cycle time of the complete schedule in time units"
+    }
+  },
+  "required": ["naps"],
+  "$defs": {
+    "nap": {
+      "type": "object",
+      "description": "General configuration of the NAP",
+      "properties": {
+        "nap_id": {
+          "type": "string",
+          "description": "ID of the NAP"
+        },
+        "timesync_priority": {
+          "type": "integer",
+          "description": "Time synchronisation priority of the NAP"
+        },
+        "vl_mapping_inner_to_outer": {
+          "type": "array",
+          "description": "List of the vl_mappings from the inner domain to the interfaces of the outer domain (for this NAP)",
+          "items": {
+            "$ref": "#/$defs/nap/$defs/vl_mapping_inner_to_outer"
+          }
+        },
+        "vl_mapping_outer_to_inner": {
+          "type": "array",
+          "description": "List of all vl_mappings from the interface of the outer domain to the inner domain (for this NAP)",
+          "items": {
+            "$ref": "#/$defs/nap/$defs/vl_mapping_outer_to_inner"
+          }
+        },
+        "tdma_slots": {
+          "type": "array",
+          "description": "List of all tdma_slots of the NAP",
+          "items": {
+            "$ref": "#/$defs/nap/$defs/tdma_slot"
+          }
+        }
+      },
+      "required": ["nap_id"],
+      "$defs": {
+        "vl_mapping_inner_to_outer": {
+          "type": "object",
+          "description": "VL mapping from inner to outer domain of the NAP",
+          "properties": {
+            "inner_domain_link_id": {
+              "type": "array",
+              "description": "Inner domain links to which the redundant VLs belong. Ordered like vl_id. Only one entry means no redundancy",
+              "items": {
+                "type": "string"
+              }
+            },
+            "vl_id": {
+              "type": "array",
+              "description": "VL IDs of the redundant virtual links. Only one entry means no redundancy",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "if_ch_number": {
+              "type": "integer",
+              "description": "Interface Channel Number to which the VL Mapping belongs"
+            },
+            "if_number": {
+              "type": "string",
+              "description": "Interface Number to which the VL Mapping belongs"
+            },
+            "if_type": {
+              "type": "string",
+              "description": "Interface type to which the VL Mapping belongs"
+            },
+            "last": {
+              "type": "array",
+              "description": "Booleans showing for each VL if this was the last hop of this VL, the packets for this VL will not be forwarded to the other HSDN link / next hop. Ordered like vl_id",
+              "items": {
+                "type": "boolean"
+              }
+            },
+            "deduplication_method": {
+              "enum": ["no", "static", "timeout", "transparent"],
+              "description": "Type of deduplication used for redundant VLs"
+            },
+            "deduplication_source": {
+              "enum": ["p0", "p1"],
+              "description": "Source of the deduplication if VL is redundant"
+            }
+          },
+          "required": [
+            "inner_domain_link_id",
+            "vl_id",
+            "if_ch_number",
+            "if_number",
+            "if_type",
+            "last"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "vl_id": {
+                    "minItems": 2
+                  }
+                }
+              },
+              "then": {
+                "required": ["deduplication_method"]
+              },
+              "else": {
+                "properties": {
+                  "vl_id": {
+                    "maxItems": 1
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "deduplication_method": {
+                    "const": "static"
+                  }
+                },
+                "required": ["deduplication_method"]
+              },
+              "then": {
+                "required": ["deduplication_source"]
+              }
+            }
+          ]
+        },
+        "vl_mapping_outer_to_inner": {
+          "type": "object",
+          "description": "VL mapping from outer to inner domain of the NAP",
+          "properties": {
+            "inner_domain_link_id": {
+              "type": "string",
+              "description": "Inner domain link to which the VL Mapping belongs"
+            },
+            "vl_id": {
+              "type": "integer",
+              "description": "VL to which the VL Mapping belongs"
+            },
+            "if_ch_number": {
+              "type": "integer",
+              "description": "Interface Channel Number to which the VL Mapping belongs"
+            },
+            "if_number": {
+              "type": "string",
+              "description": "Interface Number to which the VL Mapping belongs"
+            },
+            "if_type": {
+              "type": "string",
+              "description": "Interface type to which the VL Mapping belongs"
+            }
+          },
+          "required": [
+            "inner_domain_link_id",
+            "vl_id",
+            "if_ch_number",
+            "if_number",
+            "if_type"
+          ]
+        },
+        "tdma_slot": {
+          "type": "object",
+          "description": "A slot in the TDMA schedule",
+          "properties": {
+            "inner_domain_link_id": {
+              "type": "string",
+              "description": "Inner domain link to which the slot belongs"
+            },
+            "start": {
+              "type": "integer",
+              "description": "Start time of the slot in time units",
+              "minimum": 0
+            },
+            "end": {
+              "type": "integer",
+              "description": "End time of the slot in time units",
+              "minimum": 0
+            },
+            "is_deterministic": {
+              "type": "boolean",
+              "description": "True if VL is deterministic, best-effort else"
+            },
+            "local_destination": {
+              "type": "boolean",
+              "description": "True if packets must be transmitted only via outer domain interfaces (i.e., local destination)"
+            },
+            "virtual_links": {
+              "type": "array",
+              "description": "List of virtual link ID(s) assigned to this slot",
+              "items": {
+                "type": "integer"
+              }
+            }
+          },
+          "if": {
+            "properties": {
+              "is_deterministic": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "virtual_links": {
+                "maxItems": 1
+              }
+            }
+          },
+          "required": [
+            "inner_domain_link_id",
+            "start",
+            "end",
+            "is_deterministic",
+            "local_destination",
+            "virtual_links"
+          ]
+        }
+      }
+    }
+  }
+}
