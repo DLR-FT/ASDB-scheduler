@@ -1,0 +1,60 @@
+{
+  "cycle_time": 8.0,
+  "naps": [
+    {
+      "nap_id": "nap_0",
+      "vl_mapping_inner_to_outer": [],
+      "vl_mapping_outer_to_inner": [
+        {
+          "inner_domain_link_id": "nap_0_ni_0",
+          "vl_id": 2,
+          "if_ch_number": 0,
+          "if_number": "nap_0_ni_1",
+          "if_type": "Ethernet"
+        }
+      ],
+      "tdma_slots": [
+        {
+          "virtual_links": [2],
+          "is_deterministic": true,
+          "inner_domain_link_id": "nap_0_ni_0",
+          "start": 0,
+          "end": 1,
+          "local_destination": false
+        },
+        {
+          "virtual_links": [0],
+          "is_deterministic": true,
+          "inner_domain_link_id": "nap_0_ni_0",
+          "start": 4,
+          "end": 5,
+          "local_destination": false
+        }
+      ]
+    },
+    {
+      "nap_id": "nap_1",
+      "vl_mapping_inner_to_outer": [
+        {
+          "inner_domain_link_id": "nap_1_ni_0",
+          "vl_id": 2,
+          "if_ch_number": 0,
+          "if_number": "nap_1_ni_1",
+          "if_type": "Ethernet",
+          "last": true
+        }
+      ],
+      "vl_mapping_outer_to_inner": [],
+      "tdma_slots": [
+        {
+          "virtual_links": [1],
+          "is_deterministic": true,
+          "inner_domain_link_id": "nap_1_ni_0",
+          "start": 0,
+          "end": 1,
+          "local_destination": false
+        }
+      ]
+    }
+  ]
+}

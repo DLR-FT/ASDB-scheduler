@@ -1,0 +1,93 @@
+{
+  "max_transmission_size": 0,
+  "min_gbt": 3,
+  "common_latency_value": 2,
+  "inner_domain_links": [
+    {
+      "latency": 1,
+      "interface_list": [
+        {
+          "nap_id": "nap_0",
+          "interface_id": "nap_0_ni_0"
+        },
+        {
+          "nap_id": "nap_1",
+          "interface_id": "nap_1_ni_0"
+        }
+      ]
+    }
+  ],
+  "outer_domain_interfaces": [
+    {
+      "nap_id": "nap_0",
+      "interface_id": "nap_0_ni_1",
+      "interface_type": "Ethernet"
+    },
+    {
+      "nap_id": "nap_1",
+      "interface_id": "nap_1_ni_1",
+      "interface_type": "Ethernet"
+    }
+  ],
+  "virtual_links": [
+    {
+      "id": [0],
+      "source_nap": {
+        "nap_id": "nap_0"
+      },
+      "target_naps": [
+        {
+          "nap_id": "nap_1"
+        }
+      ],
+      "data_size": 1,
+      "transmission_frequency": 10,
+      "allow_retransmissions": false,
+      "max_allowed_latency": 11,
+      "is_deterministic": true,
+      "vl_active": true,
+      "local_destination": false,
+      "interface_channel": 0
+    },
+    {
+      "id": [1],
+      "source_nap": {
+        "nap_id": "nap_1"
+      },
+      "target_naps": [
+        {
+          "nap_id": "nap_0"
+        }
+      ],
+      "data_size": 1,
+      "transmission_frequency": 10,
+      "allow_retransmissions": false,
+      "max_allowed_latency": 11,
+      "is_deterministic": true,
+      "vl_active": true,
+      "local_destination": false,
+      "interface_channel": 0
+    },
+    {
+      "id": [2],
+      "source_nap": {
+        "nap_id": "nap_0",
+        "interface_id": "nap_0_ni_1"
+      },
+      "target_naps": [
+        {
+          "nap_id": "nap_1",
+          "interface_id": "nap_1_ni_1"
+        }
+      ],
+      "data_size": 1,
+      "transmission_frequency": 10,
+      "allow_retransmissions": false,
+      "max_allowed_latency": 11,
+      "is_deterministic": true,
+      "vl_active": true,
+      "local_destination": false,
+      "interface_channel": 0
+    }
+  ]
+}

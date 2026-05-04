@@ -1,0 +1,26 @@
+{
+  "cycle_time": 8.0,
+  "slots": [
+    {
+      "virtual_links": [2],
+      "is_deterministic": true,
+      "nap_interface": "nap_0_ni_0",
+      "start": 0,
+      "end": 1
+    },
+    {
+      "virtual_links": [0],
+      "is_deterministic": true,
+      "nap_interface": "nap_0_ni_0",
+      "start": 4,
+      "end": 5
+    },
+    {
+      "virtual_links": [1],
+      "is_deterministic": true,
+      "nap_interface": "nap_1_ni_0",
+      "start": 0,
+      "end": 1
+    }
+  ]
+}

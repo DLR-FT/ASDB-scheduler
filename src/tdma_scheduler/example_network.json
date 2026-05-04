@@ -1,16 +1,28 @@
 {
-  "Name": "RingNetwork",
+  "Name": "FiveRingNetwork",
   "max_transmission_size": 50,
-  "min_gbt": 2,
+  "min_gbt": 1,
   "common_latency_value": 1,
   "time_sync_priorities": [
     {
       "nap_id": "NAP1",
-      "priority": 12
+      "priority": 1
     },
     {
       "nap_id": "NAP2",
-      "priority": 20
+      "priority": 2
+    },
+    {
+      "nap_id": "NAP3",
+      "priority": 3
+    },
+    {
+      "nap_id": "NAP4",
+      "priority": 4
+    },
+    {
+      "nap_id": "NAP0",
+      "priority": 5
     }
   ],
   "inner_domain_links": [
@@ -35,8 +47,8 @@
           "interface_id": "N1p2"
         },
         {
-          "nap_id": "NAP6",
-          "interface_id": "N6p1"
+          "nap_id": "NAP0",
+          "interface_id": "N5p1"
         }
       ]
     },
@@ -70,25 +82,12 @@
       "latency": 1,
       "interface_list": [
         {
-          "nap_id": "NAP5",
+          "nap_id": "NAP0",
           "interface_id": "N5p2"
         },
         {
           "nap_id": "NAP4",
           "interface_id": "N4p1"
-        }
-      ]
-    },
-    {
-      "latency": 1,
-      "interface_list": [
-        {
-          "nap_id": "NAP6",
-          "interface_id": "N6p2"
-        },
-        {
-          "nap_id": "NAP5",
-          "interface_id": "N5p1"
         }
       ]
     }
@@ -100,18 +99,20 @@
       "interface_type": "Ethernet"
     },
     {
-      "nap_id": "NAP3",
-      "interface_id": "N3p3",
+      "nap_id": "NAP4",
+      "interface_id": "N4p3",
       "interface_type": "Ethernet"
     }
   ],
   "virtual_links": [
     {
-      "id": [260],
+      "id": [
+        1000
+      ],
       "allow_retransmissions": false,
       "max_allowed_latency": 1000,
       "transmission_frequency": 10,
-      "data_size": 1,
+      "data_size": 3,
       "is_deterministic": true,
       "local_destination": false,
       "vl_active": true,
@@ -126,10 +127,35 @@
         {
           "nap_id": "NAP4"
         }
-      ]
+      ],
+      "deduplication_method": "no"
     },
     {
-      "id": [263],
+      "id": [
+        1001
+      ],
+      "allow_retransmissions": false,
+      "max_allowed_latency": 1000,
+      "transmission_frequency": 10,
+      "data_size": 2,
+      "is_deterministic": true,
+      "local_destination": false,
+      "vl_active": true,
+      "interface_channel": 0,
+      "source_nap": {
+        "nap_id": "NAP3"
+      },
+      "target_naps": [
+        {
+          "nap_id": "NAP0"
+        }
+      ],
+      "deduplication_method": "no"
+    },
+    {
+      "id": [
+        1002
+      ],
       "allow_retransmissions": false,
       "max_allowed_latency": 1000,
       "transmission_frequency": 10,
@@ -143,53 +169,38 @@
       },
       "target_naps": [
         {
-          "nap_id": "NAP6"
-        }
-      ]
-    },
-    {
-      "id": [262],
-      "allow_retransmissions": false,
-      "max_allowed_latency": 1000,
-      "transmission_frequency": 10,
-      "data_size": 1,
-      "is_deterministic": true,
-      "local_destination": false,
-      "vl_active": true,
-      "interface_channel": 0,
-      "source_nap": {
-        "nap_id": "NAP3",
-        "interface_id": "N3p3"
-      },
-      "target_naps": [
-        {
           "nap_id": "NAP4"
         }
-      ]
+      ],
+      "deduplication_method": "no"
     },
     {
-      "id": [265, 264],
+      "id": [
+        1003,
+        1004
+      ],
       "allow_retransmissions": false,
       "max_allowed_latency": 1000,
       "transmission_frequency": 10,
-      "data_size": 1,
+      "data_size": 5,
       "is_deterministic": true,
       "local_destination": false,
       "vl_active": true,
       "interface_channel": 0,
       "source_nap": {
-        "nap_id": "NAP5"
+        "nap_id": "NAP0"
       },
       "target_naps": [
         {
           "nap_id": "NAP3"
         }
       ],
-      "deduplication_method": "no",
-      "deduplication_source": "p0"
+      "deduplication_method": "no"
     },
     {
-      "id": [261],
+      "id": [
+        1005
+      ],
       "allow_retransmissions": false,
       "max_allowed_latency": 1000,
       "transmission_frequency": 10,
@@ -197,57 +208,20 @@
       "is_deterministic": true,
       "local_destination": false,
       "vl_active": true,
-      "interface_channel": 8080,
+      "interface_channel": 0,
       "source_nap": {
-        "nap_id": "NAP1"
-      },
-      "target_naps": [
-        {
-          "nap_id": "NAP4"
-        }
-      ]
-    },
-    {
-      "id": [266, 267],
-      "allow_retransmissions": false,
-      "max_allowed_latency": 1000,
-      "transmission_frequency": 10,
-      "data_size": 1,
-      "is_deterministic": true,
-      "local_destination": false,
-      "vl_active": true,
-      "interface_channel": 666,
-      "source_nap": {
-        "nap_id": "NAP3"
-      },
-      "target_naps": [
-        {
           "nap_id": "NAP1",
           "interface_id": "N1p3"
+        },
+      "target_naps": [
+        {
+          "nap_id": "NAP4",
+          "interface_id": "N4p3"
         }
       ],
-      "deduplication_method": "no",
-      "deduplication_source": "p0"
-    },
-    {
-      "id": [111],
-      "allow_retransmissions": false,
-      "max_allowed_latency": 1000,
-      "transmission_frequency": 10,
-      "data_size": 1,
-      "is_deterministic": true,
-      "local_destination": false,
-      "vl_active": false,
-      "interface_channel": 111,
-      "source_nap": {
-        "nap_id": "NAP3"
-      },
-      "target_naps": [
-        {
-          "nap_id": "NAP1",
-          "interface_id": "N1p3"
-        }
-      ]
+      "deduplication_method": "no"
     }
   ]
 }
+
+

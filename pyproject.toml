@@ -22,7 +22,8 @@ authors = [{ name = "Janick Beck", email = "janick.beck@dlr.de" }]
 maintainers = [{ name = "Janick Beck", email = "janick.beck@dlr.de" }]
 description = "The right message, at the time."
 readme = "README.md"
-license = {file = "LICENSE.txt"}
+license = "MIT AND Apache-2.0"
+license-files = ["LICENCSE-*"]
 keywords = ["tdma", "network", "hsdn"]
 
 
