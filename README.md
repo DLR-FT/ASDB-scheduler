@@ -19,7 +19,7 @@ Dependencies and build options are found in the [`pyproject.toml`](pyproject.tom
 pip install -e .[test,dev]
 ```
 
-For the scheduler.py
+For the [`scheduler.py`](src/tdma_scheduler/scheduler.py)
 
 ```
 usage: scheduler [-h] [-o OUTPUT_FOLDER] [-i INPUT_SCHEMA]
@@ -65,7 +65,7 @@ Interactive HTML-output can be found in the [`doc`](doc) folder.
 
 ## Usage Verifier
 
-For the verifier.py
+For the [`verifier.py`](src/tdma_scheduler/verifier.py)
 
 ```
 usage: verifier [-h] [-os OUTPUT_SCHEMA] [-is INPUT_SCHEMA] [-c] [-l {debug,info,warning,warn,error,fatal,critical}] [output-scheduler] [input-scheduler]
