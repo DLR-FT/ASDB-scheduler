@@ -5,13 +5,13 @@ ASDB network.
 
 The program is split into two functions:
 
-- `scheduler.py`: Generates a TDMA schedule from input
-- `visualizer.py`: Offers functions for visual representation of the schedule or network graph
-- `verifier.py`: Verifies the TDMA schedule against the scheduler input
+- [`scheduler.py`](src/tdma_scheduler/scheduler.py): Generates a TDMA schedule from input
+- [`visualizer.py`](src/tdma_scheduler/visualizer.py): Offers functions for visual representation of the schedule or network graph
+- [`verifier.py`](src/tdma_scheduler/verifier.py): Verifies the TDMA schedule against the scheduler input
 
-The executable program parts can be found in the (src)[src] folder. Files for the documentation and output examples reside in the (doc)[doc] folder.
+The executable program parts can be found in the [`src`](src) folder. Files for the documentation and output examples reside in the [`doc`](doc) folder.
 
-Dependencies and build options are found in the (pyproject.toml)[pyproject.toml].
+Dependencies and build options are found in the [`pyproject.toml`](pyproject.toml).
 
 ## Usage Scheduler
 
@@ -56,12 +56,12 @@ Example Scheduler:
 python scheduler.py example_network.json -o Results
 ```
 
-Example output from the `visualizer.py`:
+Example output from the [`visualizer.py`](src/tdma_scheduler/visualizer.py):
 
 ![Visualizer graph diagram](doc/five_ring_network_graph_redundant.png)
 ![Visualizer Gantt chart](doc/five_ring_network_gantt.png)
 
-Interactive HTML-output can be found in the `doc` folder.
+Interactive HTML-output can be found in the [`doc`](doc) folder.
 
 ## Usage Verifier
 
