@@ -9,9 +9,9 @@ The program is split into two functions:
 - `visualizer.py`: Offers functions for visual representation of the schedule or network graph
 - `verifier.py`: Verifies the TDMA schedule against the scheduler input
 
-The executable program parts can be found in the (`src`)[src] folder. Files for the documentation and output examples reside in the (`doc`)[doc] folder.
+The executable program parts can be found in the (src)[src] folder. Files for the documentation and output examples reside in the (doc)[doc] folder.
 
-Dependencies and build options are found in the (`pyproject.toml`)[pyproject.toml].
+Dependencies and build options are found in the (pyproject.toml)[pyproject.toml].
 
 ## Usage Scheduler
 
