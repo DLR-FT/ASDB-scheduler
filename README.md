@@ -153,6 +153,8 @@ at your option.
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
 
+Further lifecycle documents, requirements with tracing and tests are available from the DLR. Please contact [Janick Beck](mailto:janick.beck@dlr.de).
+
 ## Copyright
 
 Copyright © 2026 Deutsches Zentrum für Luft- und Raumfahrt e.V. (DLR)
