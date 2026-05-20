@@ -673,7 +673,8 @@ def print_schedule_in_graph(
     # fig.show()
 
     # Export figure to HTML
-    fig.write_html(os.path.join(output_directory_name, output_filename))
+    fig.write_html(os.path.join(output_directory_name, output_filename),
+        config={"doubleClickDelay": 600})
 
 
 def plotly_gantt(
@@ -745,7 +746,8 @@ def plotly_gantt(
     fig_ff.write_html(
         os.path.join(
             output_directory_name, output_filename.replace(".html", "") + "_ff.html"
-        )
+        ),
+        config={"doubleClickDelay": 600},
     )
 
     fig_px = px.timeline(
@@ -803,7 +805,8 @@ def plotly_gantt(
     )
 
     # fig_px.show()
-    fig_px.write_html(os.path.join(output_directory_name, output_filename))
+    fig_px.write_html(os.path.join(output_directory_name, output_filename),
+        config={"doubleClickDelay": 600},)
 
 
 # def main():
